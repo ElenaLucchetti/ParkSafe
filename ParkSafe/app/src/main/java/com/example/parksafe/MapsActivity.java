@@ -79,7 +79,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 // Logic to handle location object
                                 // Get lat and long of current location and move camera to this position when app is opened
                                 LatLng initLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                                mMap.moveCamera(CameraUpdateFactory.newLatLng(initLocation));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(initLocation, 15));
 //                                Log.e("LOCATION***********", initLoc.toString());
                             }
                         }
