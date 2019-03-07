@@ -1,6 +1,8 @@
 package com.example.parksafe;
 
 import android.Manifest;
+
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -9,6 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -38,6 +42,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        final Button myButton = findViewById(R.id.lock);
+        myButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (myButton.getText() == "unlock") {
+                    myButton.setText("lock");
+                    startActivity(new Intent(MapsActivity.this, WriteReview.class));
+                } else {
+                    myButton.setText("unlock");
+                }
+            }
+
+        }
+        );
     }
 
     // determine the level of accuracy for location requests, will need this when dealing with location updates
