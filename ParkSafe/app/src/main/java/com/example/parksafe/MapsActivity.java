@@ -1,6 +1,7 @@
 package com.example.parksafe;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -22,13 +23,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
     private FusedLocationProviderClient fusedLocationClient;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+
+
+        try {
+            JSONArray dataarray = new JSONArray(loadJSONFromAsset("markerdata.json"));
+            for (int i = 0; i < dataarray.length();i++){
+                int x = dataarray.getJSONObject(i).getInt("latitude");
+                int y = dataarray.getJSONObject(i).getInt("longitude");
+                LatLng latlng = new LatLng(x, y);
+                mMap.addMarker(new MarkerOptions().position(latlng));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
 
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
@@ -107,5 +129,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 break;
         }
+    }
+
+    public String loadJSONFromAsset(String filename) {
+        String json = null;
+        try {
+            InputStream is = getAssets().open(filename);
+
+            int size = is.available();
+
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+
+            is.close();
+
+            json = new String(buffer, "UTF-8");
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+
     }
 }
