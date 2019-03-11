@@ -1,16 +1,18 @@
 package com.example.parksafe;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -23,22 +25,22 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
     private FusedLocationProviderClient fusedLocationClient;
+    private FloatingActionButton mButton;
+    ArrayList<Circle> ParkAreas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Choose camera to filter areas
+        mButton = (FloatingActionButton) findViewById(R.id.camera);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF13C6DA"))); //set Fab background color
+                ParkAreas.get(0).setFillColor(Color.TRANSPARENT);
+                ParkAreas.get(0).setStrokeColor(Color.TRANSPARENT);
+                ParkAreas.get(1).setFillColor(Color.TRANSPARENT);
+                ParkAreas.get(1).setStrokeColor(Color.TRANSPARENT);
+            }
+        });
+
+
+
     }
 
     // determine the level of accuracy for location requests, will need this when dealing with location updates
@@ -72,7 +90,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        ArrayList<Circle> ParkAreas = new ArrayList<Circle>();
+        ParkAreas = new ArrayList<Circle>();
 
 
         // Add circles to the map from json file
@@ -171,4 +189,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return json;
 
     }
+
 }
