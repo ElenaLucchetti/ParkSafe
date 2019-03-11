@@ -139,21 +139,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="@string/title_activity_maps"
-                android:text="Skip" />
+                android:text="Skip"
+                android:visibility="visible" />
 
             <Button
-                android:id="@+id/submit_area"
+                android:id="@+id/submit"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="@string/title_activity_maps"
-                android:text="Submit" />
+                android:text="Submit"
+                android:visibility="visible"/>
 
         </LinearLayout>
     </FrameLayout>
