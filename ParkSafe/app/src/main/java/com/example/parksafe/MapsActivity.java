@@ -3,6 +3,7 @@ package com.example.parksafe;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -19,6 +20,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -68,20 +72,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+        ArrayList<Circle> ParkAreas = new ArrayList<Circle>();
 
 
+        // Add circles to the map from json file
         try {
             JSONArray dataarray = new JSONArray(loadJSONFromAsset("markerdata.json"));
             for (int i = 0; i < dataarray.length();i++){
-                int x = dataarray.getJSONObject(i).getInt("latitude");
-                int y = dataarray.getJSONObject(i).getInt("longitude");
+                double x = dataarray.getJSONObject(i).getDouble("latitude");
+                double y = dataarray.getJSONObject(i).getDouble("longitude");
                 LatLng latlng = new LatLng(x, y);
-                mMap.addMarker(new MarkerOptions().position(latlng));
+                ParkAreas.add(mMap.addCircle(new CircleOptions().center(latlng).radius(10)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        //Set varying colours
+        ParkAreas.get(0).setFillColor(Color.RED);
+        ParkAreas.get(0).setStrokeColor(Color.RED);
+        ParkAreas.get(1).setFillColor(Color.GREEN);
+        ParkAreas.get(1).setStrokeColor(Color.GREEN);
+        ParkAreas.get(2).setFillColor(Color.RED);
+        ParkAreas.get(2).setStrokeColor(Color.RED);
+        ParkAreas.get(3).setFillColor(Color.GREEN);
+        ParkAreas.get(3).setStrokeColor(Color.GREEN);
+        ParkAreas.get(4).setFillColor(Color.GREEN);
+        ParkAreas.get(4).setStrokeColor(Color.GREEN);
 
 
         // Add a marker in Sydney and move the camera
