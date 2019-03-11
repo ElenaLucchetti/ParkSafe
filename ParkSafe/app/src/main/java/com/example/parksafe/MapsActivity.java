@@ -4,15 +4,21 @@ import android.Manifest;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -31,6 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
     private FusedLocationProviderClient fusedLocationClient;
+    private SupportMapFragment mapFragment;
 
 
 
@@ -39,20 +46,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        final Button myButton = findViewById(R.id.lock);
+        final ImageButton myButton = findViewById(R.id.lock);
         myButton.setOnClickListener(new View.OnClickListener() {
-
+            private Drawable lock = getResources().getDrawable( R.drawable.very_basic_lock_icon );
+            private Drawable unlock = getResources().getDrawable( R.drawable.very_basic_unlock_icon );
             @Override
             public void onClick(View v) {
-                if (myButton.getText() == "unlock") {
-                    myButton.setText("lock");
+                if (myButton.getBackground() == lock) {
+                    myButton.setBackground(unlock);
                     startActivity(new Intent(MapsActivity.this, WriteReview.class));
                 } else {
-                    myButton.setText("unlock");
+                    myButton.setBackground(lock);
                 }
             }
 
@@ -89,6 +96,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // Enable my current location
             mMap.setMyLocationEnabled(true);
+            // Place My Location button on the upper right corner below the lock button
+            mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+            View locationButton = ((View) mapFragment.getView().findViewById(Integer.parseInt("1")).
+                    getParent()).findViewById(Integer.parseInt("2"));
+            RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+            // position on right bottom
+            rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+            rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+            rlp.setMargins(0, 200, 30, 0);
             // Get last location (it's almost equivalent to getting the current location of the device) and do something
             fusedLocationClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {

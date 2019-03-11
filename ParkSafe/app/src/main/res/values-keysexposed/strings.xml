@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="keyboard" />
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="keyboard" tools:ignore="ExtraTranslation" />
 </resources>
