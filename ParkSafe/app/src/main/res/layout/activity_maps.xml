@@ -24,7 +24,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="47dp"
         android:clickable="true"
-        app:backgroundTint="@color/black_overlay"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/shelter"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/verified"
         app:layout_constraintStart_toEndOf="@+id/shelter"
-        app:srcCompat="@drawable/Security" />
+        app:srcCompat="@drawable/security" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/shelter"

@@ -69,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ParkAreas.get(1).setStrokeColor(Color.TRANSPARENT);
             }
         });
-        button = (button) findViewById(R.id.btn_detail_one);
+        button = findViewById(R.id.btn_detail_one);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,7 +212,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public View getInfoWindow(Marker marker) {
-        View mWindow = LayoutInflater.from(context).inflate(R.layout.info_window1, null);
+        View mWindow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.info_window1, null);
         return mWindow;
     }
 
