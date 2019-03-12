@@ -4,10 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -22,10 +25,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -35,6 +47,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private SupportMapFragment mapFragment;
     private Location myLocation;
 
+    private FloatingActionButton mButton;
+    ArrayList<Circle> ParkAreas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +83,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         );
+        // Choose camera to filter areas
+        mButton = (FloatingActionButton) findViewById(R.id.camera);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF13C6DA"))); //set Fab background color
+                ParkAreas.get(0).setFillColor(Color.TRANSPARENT);
+                ParkAreas.get(0).setStrokeColor(Color.TRANSPARENT);
+                ParkAreas.get(1).setFillColor(Color.TRANSPARENT);
+                ParkAreas.get(1).setStrokeColor(Color.TRANSPARENT);
+            }
+        });
+
+
+
     }
 
     // determine the level of accuracy for location requests, will need this when dealing with location updates
@@ -92,6 +121,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        ParkAreas = new ArrayList<Circle>();
+
+
+        // Add circles to the map from json file
+        try {
+            JSONArray dataarray = new JSONArray(loadJSONFromAsset("markerdata.json"));
+            for (int i = 0; i < dataarray.length();i++){
+                double x = dataarray.getJSONObject(i).getDouble("latitude");
+                double y = dataarray.getJSONObject(i).getDouble("longitude");
+                LatLng latlng = new LatLng(x, y);
+                ParkAreas.add(mMap.addCircle(new CircleOptions().center(latlng).radius(10)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Set varying colours
+        ParkAreas.get(0).setFillColor(Color.RED);
+        ParkAreas.get(0).setStrokeColor(Color.RED);
+        ParkAreas.get(1).setFillColor(Color.GREEN);
+        ParkAreas.get(1).setStrokeColor(Color.GREEN);
+        ParkAreas.get(2).setFillColor(Color.RED);
+        ParkAreas.get(2).setStrokeColor(Color.RED);
+        ParkAreas.get(3).setFillColor(Color.GREEN);
+        ParkAreas.get(3).setStrokeColor(Color.GREEN);
+        ParkAreas.get(4).setFillColor(Color.GREEN);
+        ParkAreas.get(4).setStrokeColor(Color.GREEN);
+
 
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
@@ -149,4 +207,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
         }
     }
+
+    public String loadJSONFromAsset(String filename) {
+        String json = null;
+        try {
+            InputStream is = getAssets().open(filename);
+
+            int size = is.available();
+
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+
+            is.close();
+
+            json = new String(buffer, "UTF-8");
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+
+    }
+
 }
