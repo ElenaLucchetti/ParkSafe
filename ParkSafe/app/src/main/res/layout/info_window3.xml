@@ -7,16 +7,16 @@
     android:layout_height="match_parent">
 
 
-    <ImageView
-        android:id="@+id/imageViewInfo1"
-        android:layout_width="130dp"
-        android:layout_height="78dp"
+    <ImageButton
+        android:id="@+id/imageBtnInfo1"
+        android:layout_width="wrap_content"
+        android:layout_height="105dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="133dp"
+        android:layout_marginStart="94dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="92dp"
         app:srcCompat="@drawable/info1" />
 
 
