@@ -170,8 +170,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double longitude4 =-4.2921882197479135;
         MarkerOptions markerOptions4 = new MarkerOptions().position(new LatLng(latitude4,longitude4)).title("Bike Park");
         Marker marker4 = googleMap.addMarker(markerOptions4);
-        //marker4.setVisible(false);
+
         marker4.showInfoWindow();
+
+        // set marker opacity to 0 to make it transparent
+        marker4.setAlpha(0.0f);
+
 
         mMap.setOnInfoWindowClickListener(this);
 
@@ -246,7 +250,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onInfoWindowClick(Marker marker) {
 
         System.out.println("info window has been clicked1");
-        opeAactivityReviewList();
+        openActivityReviewList();
     }
 
 
@@ -262,7 +266,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public void opeAactivityReviewList(){
+    public void openActivityReviewList(){
         Intent intent = new Intent(this, Activity_ReviewList.class);
         startActivity(intent);
 
