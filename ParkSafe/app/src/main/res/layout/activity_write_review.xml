@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black_overlay"
     tools:context=".WriteReview">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -55,89 +56,88 @@
             android:layout_height="match_parent">
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/camera"
+                android:id="@+id/cameraReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="6dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="47dp"
                 android:clickable="true"
-                app:backgroundTint="@color/colorPrimary"
+                app:backgroundTint="@color/common_google_signin_btn_text_dark_default"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/shelter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/camera" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/security"
+                android:id="@+id/shelterReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="6dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="47dp"
                 android:clickable="true"
-                app:backgroundTint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/verified"
-                app:layout_constraintStart_toEndOf="@+id/shelter"
-                app:srcCompat="@drawable/security" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/shelter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginBottom="47dp"
-                android:clickable="true"
-                app:backgroundTint="@color/colorPrimary"
+                app:backgroundTint="@color/common_google_signin_btn_text_dark_default"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/security"
                 app:layout_constraintStart_toEndOf="@+id/camera"
                 app:srcCompat="@drawable/shelter2" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/verified"
+                android:id="@+id/securityReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="6dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="47dp"
                 android:clickable="true"
-                app:backgroundTint="@color/colorPrimary"
+                app:backgroundTint="@color/common_google_signin_btn_text_dark_default"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/verified"
+                app:layout_constraintStart_toEndOf="@+id/shelter"
+                app:srcCompat="@drawable/security" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/verifiedReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="47dp"
+                android:clickable="true"
+                app:backgroundTint="@color/common_google_signin_btn_text_dark_default"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/allday"
                 app:layout_constraintStart_toEndOf="@+id/security"
                 app:srcCompat="@drawable/vertified1" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/allday"
+                android:id="@+id/alldayReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="6dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="47dp"
                 android:clickable="true"
-                app:backgroundTint="@color/colorPrimary"
+                app:backgroundTint="@color/common_google_signin_btn_text_dark_default"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/charge"
                 app:layout_constraintStart_toEndOf="@+id/verified"
                 app:srcCompat="@drawable/allday" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/charge"
+                android:id="@+id/chargeReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="47dp"
                 android:clickable="true"
-                app:backgroundTint="@color/colorPrimary"
+                app:backgroundTint="@color/common_google_signin_btn_text_dark_default"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/allday"
                 app:srcCompat="@drawable/charge" />
-
         </TableRow>
 
         <TableRow
