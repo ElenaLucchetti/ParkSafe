@@ -8,89 +8,16 @@
 
 
     <ImageView
-        android:id="@+id/imageViewStar3"
-        android:layout_width="32dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="230dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:srcCompat="@drawable/starnull" />
-
-
-    <ImageView
-        android:id="@+id/imageViewStar1"
-        android:layout_width="32dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="8dp"
-        app:srcCompat="@drawable/starhalf"
-        />
-
-
-    <ImageView
-        android:id="@+id/imageViewStar2"
-        android:layout_width="32dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="170dp"
-        android:layout_marginTop="8dp"
-        app:srcCompat="@drawable/starall" />
-
-
-    <ImageView
-        android:id="@+id/imageViewStar4"
-        android:layout_width="32dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="8dp"
-        app:srcCompat="@drawable/starall" />
-
-
-    <ImageView
-        android:id="@+id/imageViewStar5"
-        android:layout_width="32dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="reviewStar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/starall" />
-
-    <ImageView
-        android:id="@+id/imageViewCamera"
-        android:layout_width="61dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="210dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="8dp"
-        app:srcCompat="@drawable/camera" />
-
-
-    <ImageView
-        android:id="@+id/imageViewShelter"
-        android:layout_width="69dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="38dp"
-        app:srcCompat="@drawable/shelter2" />
-
-
-    <ImageView
-        android:id="@+id/imageView24hrs"
-        android:layout_width="57dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
-        app:srcCompat="@drawable/allday" />
-
-    <Button
-        android:id="@+id/btn_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageViewInfo1"
+        android:layout_width="130dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="12dp"
-        android:text="Detail" />
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="133dp"
+        app:srcCompat="@drawable/info1" />
 
 
 </RelativeLayout>

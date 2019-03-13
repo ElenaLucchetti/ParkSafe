@@ -170,7 +170,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double longitude4 =-4.2921882197479135;
         MarkerOptions markerOptions4 = new MarkerOptions().position(new LatLng(latitude4,longitude4)).title("Bike Park");
         Marker marker4 = googleMap.addMarker(markerOptions4);
-        marker4.setVisible(false);
+        //marker4.setVisible(false);
         marker4.showInfoWindow();
 
         mMap.setOnInfoWindowClickListener(this);
