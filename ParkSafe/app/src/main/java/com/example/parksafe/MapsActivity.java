@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
@@ -169,10 +170,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ParkAreas.get(4).setStrokeColor(Color.GREEN);
 
         //Set info window and click listener
-        //mMap.setInfoWindowAdapter(new com.example.parksafe.CustomInfoWindowAdapter(MapsActivity.this));
+      //  mMap.setOnMarkerClickListener(ClickMarker);
         mMap.setInfoWindowAdapter(this);
-        mMap.setOnInfoWindowClickListener(this);
 
+
+        double latitude4 =55.87459212290897;
+        double longitude4 =-4.2921882197479135;
+        MarkerOptions markerOptions4 = new MarkerOptions().position(new LatLng(latitude4,longitude4)).title("Bike Park");
+        Marker marker4 = googleMap.addMarker(markerOptions4);
+        marker4.showInfoWindow();
+
+       // mMap.setOnInfoWindowClickListener(this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // Enable my current location
@@ -266,4 +274,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(intent);
 
     }
+
+
+//    GoogleMap.OnMarkerClickListener ClickMarker  = new GoogleMap.OnMarkerClickListener() {
+//        @Override
+//        public boolean onMarkerClick(Marker marker) {
+//            if(marker.getTitle() == "Bike Park"){
+//                marker.showInfoWindow();
+//                return true;
+//            }else {return false;}
+//        }
+//    }
+
+
+
 }
