@@ -44,7 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
     private FusedLocationProviderClient fusedLocationClient;
-    private FloatingActionButton filterCameraButton;
+    private FloatingActionButton filterCameraButton, filterAlldayButton;
     ArrayList<Circle> ParkAreas;
     boolean isChecked=false;
 
@@ -59,6 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Choose camera to filter areas
         filterCameraButton = (FloatingActionButton) findViewById(R.id.camera);
+        filterAlldayButton = (FloatingActionButton) findViewById(R.id.allday);
         filterCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +82,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+
+        filterAlldayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isChecked){
+                    filterCameraButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF008577"))); //set Fab background color
+                    ParkAreas.get(2).setFillColor(Color.TRANSPARENT);
+                    ParkAreas.get(2).setStrokeColor(Color.TRANSPARENT);
+                    ParkAreas.get(3).setFillColor(Color.TRANSPARENT);
+                    ParkAreas.get(3).setStrokeColor(Color.TRANSPARENT);
+                    isChecked=false;
+                }
+                else{
+                    filterCameraButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF"))); //set Fab background color
+                    ParkAreas.get(2).setFillColor(Color.RED);
+                    ParkAreas.get(2).setStrokeColor(Color.RED);
+                    ParkAreas.get(3).setFillColor(Color.GREEN);
+                    ParkAreas.get(3).setStrokeColor(Color.GREEN);
+                    isChecked=true;
+
+                }
+            }
+        });
+
         button = findViewById(R.id.btn_detail_one);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
