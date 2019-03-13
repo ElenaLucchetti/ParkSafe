@@ -171,8 +171,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         MarkerOptions markerOptions4 = new MarkerOptions().position(new LatLng(latitude4,longitude4)).title("Bike Park");
         Marker marker4 = googleMap.addMarker(markerOptions4);
 
-        marker4.showInfoWindow();
-
         // set marker opacity to 0 to make it transparent
         marker4.setAlpha(0.0f);
 
