@@ -107,13 +107,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        button = findViewById(R.id.btn_detail_one);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                opeAactivityReviewList();
-            }
-        });
+//        button = findViewById(R.id.btn_detail_one);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                opeAactivityReviewList();
+//            }
+//        });
 
     }
 
