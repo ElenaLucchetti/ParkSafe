@@ -46,8 +46,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FusedLocationProviderClient fusedLocationClient;
     private FloatingActionButton filterCameraButton, filterAlldayButton;
     ArrayList<Circle> ParkAreas;
-    boolean isChecked=false;
-    boolean isChecked_=false;
+    boolean isCheckedCamera = true;
+    boolean isCheckedAllDay = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +60,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Choose camera to filter areas
         filterCameraButton = (FloatingActionButton) findViewById(R.id.camera);
+        // Choose 24hrs to filter areas
         filterAlldayButton = (FloatingActionButton) findViewById(R.id.allday);
         filterCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isChecked){
+                if(isCheckedCamera){
                     filterCameraButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF008577"))); //set Fab background color
                     ParkAreas.get(0).setFillColor(Color.TRANSPARENT);
                     ParkAreas.get(0).setStrokeColor(Color.TRANSPARENT);
                     ParkAreas.get(1).setFillColor(Color.TRANSPARENT);
                     ParkAreas.get(1).setStrokeColor(Color.TRANSPARENT);
-                    isChecked=false;
+                    isCheckedCamera = !isCheckedCamera;
                 }
                 else{
                     filterCameraButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF"))); //set Fab background color
@@ -78,7 +79,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     ParkAreas.get(0).setStrokeColor(Color.RED);
                     ParkAreas.get(1).setFillColor(Color.GREEN);
                     ParkAreas.get(1).setStrokeColor(Color.GREEN);
-                    isChecked=true;
+                    isCheckedCamera = !isCheckedCamera;
 
                 }
             }
@@ -87,13 +88,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         filterAlldayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isChecked_){
+                if(isCheckedAllDay){
                     filterAlldayButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF008577"))); //set Fab background color
                     ParkAreas.get(2).setFillColor(Color.TRANSPARENT);
                     ParkAreas.get(2).setStrokeColor(Color.TRANSPARENT);
                     ParkAreas.get(3).setFillColor(Color.TRANSPARENT);
                     ParkAreas.get(3).setStrokeColor(Color.TRANSPARENT);
-                    isChecked_=false;
+                    isCheckedAllDay = !isCheckedAllDay;
                 }
                 else{
                     filterAlldayButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF"))); //set Fab background color
@@ -101,7 +102,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     ParkAreas.get(2).setStrokeColor(Color.RED);
                     ParkAreas.get(3).setFillColor(Color.GREEN);
                     ParkAreas.get(3).setStrokeColor(Color.GREEN);
-                    isChecked_=true;
+                    isCheckedAllDay = !isCheckedAllDay;
 
                 }
             }
