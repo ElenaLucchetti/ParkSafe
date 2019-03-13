@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,13 +16,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
@@ -45,8 +44,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
     private FusedLocationProviderClient fusedLocationClient;
-    private FloatingActionButton mButton;
+    private FloatingActionButton filterCameraButton;
     ArrayList<Circle> ParkAreas;
+    boolean isChecked=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +58,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         // Choose camera to filter areas
-        mButton = (FloatingActionButton) findViewById(R.id.camera);
-        mButton.setOnClickListener(new View.OnClickListener() {
+        filterCameraButton = (FloatingActionButton) findViewById(R.id.camera);
+        filterCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF13C6DA"))); //set Fab background color
-                ParkAreas.get(0).setFillColor(Color.TRANSPARENT);
-                ParkAreas.get(0).setStrokeColor(Color.TRANSPARENT);
-                ParkAreas.get(1).setFillColor(Color.TRANSPARENT);
-                ParkAreas.get(1).setStrokeColor(Color.TRANSPARENT);
+                if(isChecked){
+                    filterCameraButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF008577"))); //set Fab background color
+                    ParkAreas.get(0).setFillColor(Color.TRANSPARENT);
+                    ParkAreas.get(0).setStrokeColor(Color.TRANSPARENT);
+                    ParkAreas.get(1).setFillColor(Color.TRANSPARENT);
+                    ParkAreas.get(1).setStrokeColor(Color.TRANSPARENT);
+                    isChecked=false;
+                }
+                else{
+                    filterCameraButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF"))); //set Fab background color
+                    ParkAreas.get(0).setFillColor(Color.RED);
+                    ParkAreas.get(0).setStrokeColor(Color.RED);
+                    ParkAreas.get(1).setFillColor(Color.GREEN);
+                    ParkAreas.get(1).setStrokeColor(Color.GREEN);
+                    isChecked=true;
+
+                }
             }
         });
         button = findViewById(R.id.btn_detail_one);
