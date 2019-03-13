@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">ParkSafe</string>
     <string name="title_activity_maps">ParkSafe</string>
-    <string name="title_activity_write_review">WriteReview</string>
 </resources>

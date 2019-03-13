@@ -3,7 +3,6 @@ package com.example.parksafe;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Location;
@@ -13,8 +12,13 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -23,6 +27,8 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
@@ -39,16 +45,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
-    public GoogleMap mMap;
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, OnInfoWindowClickListener, InfoWindowAdapter {
+    private Button button;
+    private GoogleMap mMap;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
     private FusedLocationProviderClient fusedLocationClient;
-    private SupportMapFragment mapFragment;
-    private Location myLocation;
-
-    private FloatingActionButton mButton;
+  
+    private FloatingActionButton filterCameraButton, filterAlldayButton;
     ArrayList<Circle> ParkAreas;
+    boolean isCheckedCamera = true;
+    boolean isCheckedAllDay = true;
+  
+    private SupportMapFragment mapFragment;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,45 +68,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-        final ImageButton lockButton = findViewById(R.id.lock);
-        final Drawable lock = getResources().getDrawable(R.drawable.very_basic_lock_icon);
-        final Drawable unlock = getResources().getDrawable(R.drawable.very_basic_unlock_icon);
-        lockButton.setBackground(lock);
-        lockButton.setOnClickListener(new View.OnClickListener() {
-            private MarkerOptions bikeMarker;
-            private Marker mapMarker;
-            @Override
-            public void onClick(View v) {
-                if (lockButton.getBackground() == lock) {
-                    if (mMap.isMyLocationEnabled()) {
-                        bikeMarker = new MarkerOptions().position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())).title("Locked Bike");
-                        mapMarker = mMap.addMarker(bikeMarker);
-                        lockButton.setBackground(unlock);
-                    }
-                } else {
-                        startActivity(new Intent(MapsActivity.this, WriteReview.class));
-                        mapMarker.remove();
-                        lockButton.setBackground(lock);
-                }
-                }
-
-            }
-        );
         // Choose camera to filter areas
-        mButton = (FloatingActionButton) findViewById(R.id.camera);
-        mButton.setOnClickListener(new View.OnClickListener() {
+        filterCameraButton = (FloatingActionButton) findViewById(R.id.camera);
+        // Choose 24hrs to filter areas
+        filterAlldayButton = (FloatingActionButton) findViewById(R.id.allday);
+        filterCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF13C6DA"))); //set Fab background color
-                ParkAreas.get(0).setFillColor(Color.TRANSPARENT);
-                ParkAreas.get(0).setStrokeColor(Color.TRANSPARENT);
-                ParkAreas.get(1).setFillColor(Color.TRANSPARENT);
-                ParkAreas.get(1).setStrokeColor(Color.TRANSPARENT);
+                if(isCheckedCamera){
+                    filterCameraButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF008577"))); //set Fab background color
+                    ParkAreas.get(0).setFillColor(Color.TRANSPARENT);
+                    ParkAreas.get(0).setStrokeColor(Color.TRANSPARENT);
+                    ParkAreas.get(1).setFillColor(Color.TRANSPARENT);
+                    ParkAreas.get(1).setStrokeColor(Color.TRANSPARENT);
+                    isCheckedCamera = !isCheckedCamera;
+                }
+                else{
+                    filterCameraButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF"))); //set Fab background color
+                    ParkAreas.get(0).setFillColor(Color.RED);
+                    ParkAreas.get(0).setStrokeColor(Color.RED);
+                    ParkAreas.get(1).setFillColor(Color.GREEN);
+                    ParkAreas.get(1).setStrokeColor(Color.GREEN);
+                    isCheckedCamera = !isCheckedCamera;
+
+                }
             }
         });
 
+        filterAlldayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isCheckedAllDay){
+                    filterAlldayButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF008577"))); //set Fab background color
+                    ParkAreas.get(2).setFillColor(Color.TRANSPARENT);
+                    ParkAreas.get(2).setStrokeColor(Color.TRANSPARENT);
+                    ParkAreas.get(3).setFillColor(Color.TRANSPARENT);
+                    ParkAreas.get(3).setStrokeColor(Color.TRANSPARENT);
+                    isCheckedAllDay = !isCheckedAllDay;
+                }
+                else{
+                    filterAlldayButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFFFF"))); //set Fab background color
+                    ParkAreas.get(2).setFillColor(Color.RED);
+                    ParkAreas.get(2).setStrokeColor(Color.RED);
+                    ParkAreas.get(3).setFillColor(Color.GREEN);
+                    ParkAreas.get(3).setStrokeColor(Color.GREEN);
+                    isCheckedAllDay = !isCheckedAllDay;
 
+                }
+            }
+        });
 
     }
 
@@ -150,11 +170,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ParkAreas.get(4).setFillColor(Color.GREEN);
         ParkAreas.get(4).setStrokeColor(Color.GREEN);
 
+        //Set info window and click listener
+        //  mMap.setOnMarkerClickListener(ClickMarker);
+        mMap.setInfoWindowAdapter(this);
 
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        double latitude4 =55.87459212290897;
+        double longitude4 =-4.2921882197479135;
+        MarkerOptions markerOptions4 = new MarkerOptions().position(new LatLng(latitude4,longitude4)).title("Bike Park");
+        Marker marker4 = googleMap.addMarker(markerOptions4);
+
+        // set marker opacity to 0 to make it transparent
+        marker4.setAlpha(0.0f);
+
+
+        mMap.setOnInfoWindowClickListener(this);
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // Enable my current location
             mMap.setMyLocationEnabled(true);
@@ -174,7 +205,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                myLocation = location;
                                 // Logic to handle location object
                                 // Get lat and long of current location and move camera to this position when app is opened
                                 LatLng initLocation = new LatLng(location.getLatitude(), location.getLongitude());
@@ -212,18 +242,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String json = null;
         try {
             InputStream is = getAssets().open(filename);
-
             int size = is.available();
-
             byte[] buffer = new byte[size];
 
             is.read(buffer);
-
             is.close();
-
             json = new String(buffer, "UTF-8");
-
-
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
@@ -232,4 +256,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
+        System.out.println("info window has been clicked1");
+        openActivityReviewList();
+    }
+
+
+    @Override
+    public View getInfoWindow(Marker marker) {
+        View mWindow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.info_window3, null);
+        return mWindow;
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        return null;
+    }
+
+
+    public void openActivityReviewList(){
+        Intent intent = new Intent(this, Activity_ReviewList.class);
+        startActivity(intent);
+
+    }
 }
