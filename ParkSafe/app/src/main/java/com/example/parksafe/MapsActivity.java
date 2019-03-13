@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -55,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<Circle> ParkAreas;
     boolean isCheckedCamera = true;
     boolean isCheckedAllDay = true;
+    private Location myLocation;
   
     private SupportMapFragment mapFragment;
 
@@ -118,6 +121,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        final ImageButton lockButton = findViewById(R.id.lock);
+        final Drawable lock = getResources().getDrawable(R.drawable.very_basic_lock_icon);
+        final Drawable unlock = getResources().getDrawable(R.drawable.very_basic_unlock_icon);
+        lockButton.setBackground(lock);
+        lockButton.setOnClickListener(new View.OnClickListener() {
+                                          private MarkerOptions bikeMarker;
+                                          private Marker mapMarker;
+                                          @Override
+                                          public void onClick(View v) {
+                                              if (lockButton.getBackground() == lock) {
+                                                  if (mMap.isMyLocationEnabled()) {
+                                                      bikeMarker = new MarkerOptions().position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())).title("Locked Bike");
+                                                      mapMarker = mMap.addMarker(bikeMarker);
+                                                      lockButton.setBackground(unlock);
+                                                  }
+                                              } else {
+                                                  startActivity(new Intent(MapsActivity.this, WriteReview.class));
+                                                  mapMarker.remove();
+                                                  lockButton.setBackground(lock);
+                                              }
+                                          }
+
+                                      }
+        );
     }
 
     // determine the level of accuracy for location requests, will need this when dealing with location updates
@@ -205,6 +232,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
+                                myLocation = location;
                                 // Logic to handle location object
                                 // Get lat and long of current location and move camera to this position when app is opened
                                 LatLng initLocation = new LatLng(location.getLatitude(), location.getLongitude());

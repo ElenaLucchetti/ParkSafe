@@ -16,6 +16,21 @@
     android:layout_height="match_parent"
     tools:context=".MapsActivity" />
 
+    <ImageButton
+        android:id="@+id/lock"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="360dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/very_basic_lock_icon"
+        android:clickable="true"
+        android:contentDescription="lock"
+        android:focusable="true"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/map"
+        app:layout_constraintTop_toTopOf="@+id/map"
+        app:srcCompat="@drawable/very_basic_lock_icon" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/camera"
         android:layout_width="wrap_content"
