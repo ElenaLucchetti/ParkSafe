@@ -109,14 +109,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-//        button = findViewById(R.id.btn_detail_one);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                opeAactivityReviewList();
-//            }
-//        });
-
     }
 
     // determine the level of accuracy for location requests, will need this when dealing with location updates
@@ -170,7 +162,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ParkAreas.get(4).setStrokeColor(Color.GREEN);
 
         //Set info window and click listener
-      //  mMap.setOnMarkerClickListener(ClickMarker);
+        //  mMap.setOnMarkerClickListener(ClickMarker);
         mMap.setInfoWindowAdapter(this);
 
 
@@ -178,9 +170,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double longitude4 =-4.2921882197479135;
         MarkerOptions markerOptions4 = new MarkerOptions().position(new LatLng(latitude4,longitude4)).title("Bike Park");
         Marker marker4 = googleMap.addMarker(markerOptions4);
+        marker4.setVisible(false);
         marker4.showInfoWindow();
 
-       // mMap.setOnInfoWindowClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // Enable my current location
@@ -259,7 +252,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public View getInfoWindow(Marker marker) {
-        View mWindow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.info_window1, null);
+        View mWindow = LayoutInflater.from(getApplicationContext()).inflate(R.layout.info_window3, null);
         return mWindow;
     }
 
