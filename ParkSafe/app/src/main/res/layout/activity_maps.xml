@@ -31,6 +31,61 @@
         app:layout_constraintTop_toTopOf="@+id/map"
         app:srcCompat="@drawable/very_basic_lock_icon" />
 
+    <TextView
+        android:id="@+id/cameraText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="camera"
+        app:layout_constraintBottom_toTopOf="@id/camera"
+        app:layout_constraintEnd_toEndOf="@id/camera"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/camera" />
+
+    <TextView
+        android:id="@+id/shelterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="shelter"
+        app:layout_constraintBottom_toTopOf="@id/shelter"
+        app:layout_constraintStart_toStartOf="@id/shelter" />
+
+    <TextView
+        android:id="@+id/securityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="security"
+        app:layout_constraintBottom_toTopOf="@id/security"
+        app:layout_constraintStart_toStartOf="@id/security" />
+
+    <TextView
+        android:id="@+id/verifiedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="verified"
+        app:layout_constraintBottom_toTopOf="@id/verified"
+        app:layout_constraintStart_toStartOf="@id/verified" />
+
+    <TextView
+        android:id="@+id/alldayText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="all day"
+        app:layout_constraintBottom_toTopOf="@id/allday"
+        app:layout_constraintStart_toStartOf="@id/allday" />
+
+    <TextView
+        android:id="@+id/chargeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="charge"
+        app:layout_constraintBottom_toTopOf="@id/charge"
+        app:layout_constraintStart_toStartOf="@id/charge" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/camera"
         android:layout_width="wrap_content"

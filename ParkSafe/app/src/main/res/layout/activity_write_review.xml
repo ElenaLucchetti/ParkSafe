@@ -51,6 +51,60 @@
         </TableRow>
 
         <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/cameraText"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="camera"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/cameraText"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="camera" />
+
+            <TextView
+                android:id="@+id/shelterText"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_height="wrap_content"
+                android:text="shelter" />
+
+            <TextView
+                android:id="@+id/securityText"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_height="wrap_content"
+                android:text="security" />
+            <TextView
+                android:id="@+id/verifiedText"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_height="wrap_content"
+                android:text="verified" />
+            <TextView
+                android:id="@+id/alldayText"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_height="wrap_content"
+                android:text="all day" />
+            <TextView
+                android:id="@+id/chargeText"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_height="wrap_content"
+                android:text="charge" />
+        </TableRow>
+
+        <TableRow
             android:id="@+id/buttonPanel"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
