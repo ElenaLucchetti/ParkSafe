@@ -1,6 +1,9 @@
 package com.example.parksafe;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -9,6 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -131,11 +136,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                           @Override
                                           public void onClick(View v) {
                                               if (lockButton.getBackground() == lock) {
-                                                  if (mMap.isMyLocationEnabled()) {
-                                                      bikeMarker = new MarkerOptions().position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())).title("Locked Bike");
-                                                      mapMarker = mMap.addMarker(bikeMarker);
-                                                      lockButton.setBackground(unlock);
+                                                  Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+// Vibrate for 500 milliseconds
+                                                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                                      vib.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                                                  } else {
+                                                      //deprecated in API 26
+                                                      vib.vibrate(500);
                                                   }
+                                                  new AlertDialog.Builder(v.getContext())
+                                                          .setTitle("Caution!")
+                                                          .setMessage("Some unsafe parking spots have been detected in your area. " +
+                                                                  "Do you wish to continue?")
+
+                                                          // Specifying a listener allows you to take an action before dismissing the dialog.
+                                                          // The dialog is automatically dismissed when a dialog button is clicked.
+                                                          .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                                              public void onClick(DialogInterface dialog, int which) {
+                                                                  if (mMap.isMyLocationEnabled()) {
+                                                                      bikeMarker = new MarkerOptions().position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())).title("Locked Bike");
+                                                                      mapMarker = mMap.addMarker(bikeMarker);
+                                                                      lockButton.setBackground(unlock);
+                                                                  }
+                                                              }
+                                                          })
+
+                                                          // A null listener allows the button to dismiss the dialog and take no further action.
+                                                          .setNegativeButton(android.R.string.no, null)
+                                                          .setIcon(android.R.drawable.ic_dialog_alert)
+                                                          .show();
+                                                  Circle review =mMap.addCircle(new CircleOptions().center(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())).radius(10));
+                                                  review.setFillColor(Color.GRAY);
                                               } else {
                                                   startActivity(new Intent(MapsActivity.this, WriteReview.class));
                                                   mapMarker.remove();
